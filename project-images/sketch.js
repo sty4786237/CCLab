@@ -11,7 +11,7 @@ function setup() {
  canvas.parent("p5-canvas-container");
 
 
- background(0);
+ background(255);
 }
 
 
@@ -23,9 +23,9 @@ function draw() {
  let y = mouseY;
  let size = random(10, 50);
  push();
- blendMode(ADD);
+ blendMode(MULTIPLY);
 
- tint(5,5,5);
+ tint(255,180,240,10);
  imageMode(CENTER);
  image(img, x, y, size, size); //(img, x, y, (w), (h));
  pop();
