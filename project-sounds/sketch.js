@@ -1,4 +1,5 @@
 let sound;
+let amp;
 
 
 function preload() {
@@ -9,23 +10,38 @@ function preload() {
 function setup() {
  let canvas = createCanvas(800, 500);
  canvas.parent("p5-canvas-container");
+ background(220);
+
+
+ amp = new p5.Amplitude();
 }
 
 
 function draw() {
- background(220);
+ //background(220);
+ background(220, 30);
 
 
- let volValue = map(mouseY, 0, height, 1.0, 0.0, true);
- //sound.setVolume(volValue);
+ let volume = amp.getLevel();
+ //let brightness = map(volume, 0, 0.5, 0, 255);
+ //fill(brightness);
 
 
- let panValue = map(mouseX, 0, width, -1.0, 1.0, true);
- //sound.pan(panValue); // center: 0, left: -1, right: 100%
+ let dia = map(volume, 0, 1, 1, 500);
 
 
- let rateValue = map(mouseY, 0, height, 2.0, 0.01, true);
- //sound.rate(rateValue); // % value
+ noStroke();
+ fill(0, 255, 255);
+ circle(width / 2, height / 2, dia);
+
+
+ //fill(255, 0, 0);
+ //rect(0, 0, dia, 50);
+
+
+ fill(0);
+ textSize(30);
+ text(volume.toFixed(2), 100, 100);
 }
 
 
@@ -38,3 +54,4 @@ function mousePressed() {
    sound.loop();
  }
 }
+
