@@ -1,50 +1,67 @@
-let x = [];
-let y = [];
-let xSpeed = [];
-let ySpeed = [];
-let dia = [];
-let r=[];
-let g=[];
-let b=[];
+let balls = [];
 
 
 function setup() {
  let canvas = createCanvas(800, 500);
  canvas.parent("p5-canvas-container");
+ background(0);
 
 
- for (let i = 0; i < 15; i++) {
-   x[i] = width / 2;
-   y[i] = height / 2;
-   xSpeed[i] = random(-3, 3);
-   ySpeed[i] = random(-3, 3);
-   dia[i] = random(10, 30);
-   r[i] = random(255);
-   g[i] = random(255);
-   b[i] = random(255);
+ for (let i = 0; i < 1000; i++) {
+   balls[i] = new Ball();
  }
+
+
 }
 
 
 function draw() {
- background(0);
+ //background(0);
 
 
- for (let i = 0; i < x.length; i++) {
-   // move
-   x[i] += xSpeed[i];
-   y[i] += ySpeed[i];
-   // bounce
-   if (x[i] < 0 || x[i] > width) {
-     xSpeed[i] *= -1; //xSpeed = xSpeed * -1;
-   }
-   if (y[i] < 0 || y[i] > height) {
-     ySpeed[i] *= -1;
-   }
-   // display
-   noStroke();
-   blendMode(ADD);
-   fill(r[i], g[i], b[i], 150);
-   circle(x[i], y[i], dia[i]);
+ for (let i = 0; i < balls.length; i++) {
+   let eachBall = balls[i];
+   eachBall.move();
+   eachBall.bounce();
+   eachBall.display();
  }
 }
+
+
+//
+
+
+class Ball {
+ constructor() {
+   // variables --> properties
+   this.x = random(width); //width / 2;
+   this.y = height / 2;
+   this.dia = random(10, 30);
+   this.xSpeed = 0; //random(-3, 3);
+   this.ySpeed = random(-3, 3);
+   //
+   this.r = random(255);
+   this.g = random(255);
+   this.b = random(255);
+ }
+ // functions --> methods! actions
+ move() {
+   this.x += this.xSpeed;
+   this.y += this.ySpeed;
+ }
+ bounce() {
+   if (this.x < 0 || this.x > width) {
+     this.xSpeed *= -1;
+   }
+   if (this.y < 0 || this.y > height) {
+     this.ySpeed *= -1;
+   }
+ }
+ display() {
+   noStroke();
+   fill(this.r, this.g, this.b);
+   circle(this.x, this.y, this.dia);
+ }
+}
+
+
