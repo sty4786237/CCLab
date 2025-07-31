@@ -1,55 +1,50 @@
-let colors = [
- "Aquamarine",
- "Chartreuse",
- "CornflowerBlue",
- "Cornsilk",
- "DarkOrchid",
- "DarkTurquoise",
- "DeepPink",
- "DodgerBlue",
- "FireBrick",
-]; // array!
+let x = [];
+let y = [];
+let xSpeed = [];
+let ySpeed = [];
+let dia = [];
+let r=[];
+let g=[];
+let b=[];
 
 
 function setup() {
  let canvas = createCanvas(800, 500);
  canvas.parent("p5-canvas-container");
 
- //array.push() adds an element to the end of the array
- //array.splice(index, count) removes 'count' elements from the array starting at 'index'
- //array.length gives the number of elements in the array
- //array[index] accesses the element at the specified index 
- 
- colors.push("Gold");
- colors.splice(2, 1); // removes the single element at index 2 (CornflowerBlue)
- colors.push("LightCoral");
 
+ for (let i = 0; i < 15; i++) {
+   x[i] = width / 2;
+   y[i] = height / 2;
+   xSpeed[i] = random(-3, 3);
+   ySpeed[i] = random(-3, 3);
+   dia[i] = random(10, 30);
+   r[i] = random(255);
+   g[i] = random(255);
+   b[i] = random(255);
+ }
 }
 
 
 function draw() {
- background(220);
+ background(0);
 
 
- for (let i = 0; i < colors.length; i++) {
-   let rectH = 50;
-   let x = 0;
-   let y = 0 + i * rectH;
-
-
+ for (let i = 0; i < x.length; i++) {
+   // move
+   x[i] += xSpeed[i];
+   y[i] += ySpeed[i];
+   // bounce
+   if (x[i] < 0 || x[i] > width) {
+     xSpeed[i] *= -1; //xSpeed = xSpeed * -1;
+   }
+   if (y[i] < 0 || y[i] > height) {
+     ySpeed[i] *= -1;
+   }
+   // display
    noStroke();
-   fill(colors[i]);
-   rect(x, y, width, rectH);
-
-
-   textSize(30);
-   fill(255);
-   text(colors[i], x + 20, y + 30);
+   blendMode(ADD);
+   fill(r[i], g[i], b[i], 150);
+   circle(x[i], y[i], dia[i]);
  }
 }
-// This is a simple sketch that draws rectangles of different colors
-// and displays the color names on top of them.
-// The colors are stored in an array, and the sketch iterates through
-// the array to draw each rectangle and its corresponding name.
-// The rectangles are evenly spaced vertically, and the text is centered
-// within each rectangle.           
