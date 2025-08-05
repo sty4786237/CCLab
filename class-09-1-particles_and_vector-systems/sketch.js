@@ -14,10 +14,9 @@ function draw() {
 
 
  // generate a particle
- let x = mouseX;
- let y = mouseY;
+ let position = createVector(mouseX, mouseY);
  let size = random(5, 25);
- let newP = new Particle(x, y, size);
+ let newP = new Particle(position, size);
  particles.push(newP);
 
 
@@ -40,33 +39,30 @@ function draw() {
 
 // Particle class
 class Particle {
- constructor(x, y, size) {
-   this.x = x;
-   this.y = y;
+ constructor(position, size) {
+   this.position=createVector(position.x, position.y);
    this.size = size;
    //
-   this.xSpeed = random(-3, 3);
-   this.ySpeed = random(-8, -5);
+   this.velocity = createVector(random(-3, 3), random(-3, 3));
    //
    this.r = random(150, 255);
    this.g = random(255);
    this.b = 0; //random(255);
    //
-   this.rotSpeed = random(-0.3, 0.3);
+   this.rotateSpeed = random(-0.3, 0.3);
  }
  move() {
-   this.x += this.xSpeed;
-   this.y += this.ySpeed;
+   this.position += this.velocity;
  }
  fall() {
-   this.ySpeed += 0.1;
+   this.velocity.y += 0.1;
  }
  display() {
    push(); // ***
    translate(this.x, this.y); // ***
 
 
-   rotate(frameCount * this.rotSpeed);
+   rotate(frameCount * this.rotateSpeed);
    rectMode(CENTER);
 
 
