@@ -52,14 +52,14 @@ class Particle {
    this.rotateSpeed = random(-0.3, 0.3);
  }
  move() {
-   this.position += this.velocity;
+   this.position.add(this.velocity);
  }
  fall() {
    this.velocity.y += 0.1;
  }
  display() {
    push(); // ***
-   translate(this.x, this.y); // ***
+   translate(this.position.x, this.position.y); // ***
 
 
    rotate(frameCount * this.rotateSpeed);
