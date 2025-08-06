@@ -27,7 +27,7 @@ function draw() {
   particles.push(newP);
 
   ///// limit the number of particles /////
-  while (particles.length > 100) {
+  while (particles.length > 1000) {
     // remove the oldest (first) particle
     particles.splice(0, 1); // (index, quantity)
   }
@@ -37,7 +37,7 @@ function draw() {
 
     // resistance
     if (p.pos.y > liquidHeight) {
-      let dragCoefficient = 0.01;
+      let dragCoefficient = 0.05;
       let speed = p.vel.mag();
       let dragMagnitude = dragCoefficient * speed * speed;
 
