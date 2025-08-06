@@ -5,7 +5,8 @@ let liquid;
 let filledColor;
 
 function setup() {
-  canvas = createCanvas(800, 800);
+  let canvas = createCanvas(800, 800);
+  canvas.parent("p5-canvas-container");
   background(50);
 
   filledColor = color(255);
@@ -36,7 +37,7 @@ function draw() {
 
     // resistance
     if (p.pos.y > liquidHeight) {
-      let dragCoefficient = 0.02;
+      let dragCoefficient = 0.01;
       let speed = p.vel.mag();
       let dragMagnitude = dragCoefficient * speed * speed;
 
