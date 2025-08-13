@@ -6,22 +6,21 @@ CCLaboratories Biodiversity Atlas
 */
 
 //Start
-let time = 0;
 let flapFrequency = 0;
-let birds = []; // Array to store multiple birds (The most challenging tech difficulty)
-
-//For calculating mouse speed
-let prevMouseX = 0;
-let prevMouseY = 0;
-let mouseSpeed = 0;
+let bird; // Single bird object
 
 //Set up background in dark blue
 function setup() {
-  
-  let canvas=createCanvas(800, 500);
+  let canvas = createCanvas(800, 500);
   canvas.parent('p5-canvas-container'); // Attach the canvas to the container in index.html
   background(20, 28, 49);
-  birds.push({ x: width / 2, y: height / 2, initialPosition: 0 }); // Draw the first bird on the center
+
+  //Initialize the bird position
+  bird = { 
+    x: width / 2, 
+    y: height / 2,  
+  };
+  
 }
 
 function draw() {
@@ -29,48 +28,18 @@ function draw() {
   fill(20, 28, 49, 40);
   noStroke();
   rect(0, 0, width, height);
+  
   //Core tech difficulties (Explained below)
   shiningStars();
   brightMoon();
-  drawBirds();
+  updateAndDrawBird();
 
-  // Calculate mouse speed
-  mouseSpeed = dist(mouseX, mouseY, prevMouseX, prevMouseY);
-  prevMouseX = mouseX;
-  prevMouseY = mouseY;
 }
 
-// Add birds when you click the mouse (The maximum is 5)
-function mousePressed() {
-  if (birds.length < 5) {
-    birds.push({
-      x: mouseX,
-      y: mouseY,
-      initialPosition: random(TWO_PI), // different initial positions
-    });
-  }
-}
-
-// Draw all birds
-function drawBirds() {
-  for (let i = 0; i < birds.length; i++) {
-    updateAndDrawBird(birds[i]);
-  }
-}
-
-// Draw a single bird
-function updateAndDrawBird(bird) {
-  // Dynamic distance among birds based on mouse speed
-  let radiusX = 80 + mouseSpeed * 5; 
-  let radiusY = 50 + mouseSpeed * 3; 
-  //Forming an ellipse because of different mouse speed
-
-  bird.x +=
-    (mouseX + cos(time * 0.02 + bird.initialPosition) * radiusX - bird.x) *
-    0.05;
-  bird.y +=
-    (mouseY + sin(time * 0.02 + bird.initialPosition) * radiusY - bird.y) *
-    0.05;
+// Draw the single bird
+function updateAndDrawBird() {
+  bird.x=width/2;
+  bird.y=height/2;
 
   push();
   translate(bird.x, bird.y);
@@ -86,10 +55,21 @@ function updateAndDrawBird(bird) {
   fill(141, 0, 196);
   ellipse(0, -20, 5, 60);
 
+  // Eyes
+  fill(lerpColor(
+    color(255,255,255),
+    color(0,0,0),
+    (sin(frameCount * 0.263 + 1) + 1) / 2
+    )
+  );
+  circle(-6,-12,5);
+  circle(6,-12,5);
+
+
   // Flapping wings
   fill(mouseX % 255, ((mouseX + mouseY) / 2) % 255, mouseY % 255);
   flapFrequency += 0.2;
-  let wingSize = 30 + sin(flapFrequency + bird.initialPosition) * 10;
+  let wingSize = 30 + sin(flapFrequency) * 10;
   ellipse(-15, 0, wingSize, 15);
   ellipse(15, 0, wingSize, 15);
 
@@ -118,7 +98,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.02) + 1) / 2
+      (sin(frameCount * 0.02) + 1) / 2
     )
   );
   circle(165, 582, 10);
@@ -127,7 +107,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.03 + 1) + 1) / 2
+      (sin(frameCount * 0.03 + 1) + 1) / 2
     )
   );
   circle(450, 245, 7);
@@ -136,7 +116,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.025 + 2) + 1) / 2
+      (sin(frameCount * 0.025 + 2) + 1) / 2
     )
   );
   circle(298, 127, 6);
@@ -145,7 +125,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.035 + 3) + 1) / 2
+      (sin(frameCount * 0.035 + 3) + 1) / 2
     )
   );
   circle(286, 372, 4);
@@ -154,7 +134,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.028 + 4) + 1) / 2
+      (sin(frameCount * 0.028 + 4) + 1) / 2
     )
   );
   circle(510, 533, 7);
@@ -163,7 +143,7 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.032 + 5) + 1) / 2
+      (sin(frameCount * 0.032 + 5) + 1) / 2
     )
   );
   circle(595, 305, 8);
@@ -172,12 +152,10 @@ function shiningStars() {
     lerpColor(
       color(20, 28, 49),
       color(255, 255, 255),
-      (sin(time * 0.04 + 6) + 1) / 2
+      (sin(frameCount * 0.04 + 6) + 1) / 2
     )
   );
   circle(653, 617, 2);
-
-  time++;
 }
 
 // Moon patterns
