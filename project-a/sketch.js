@@ -5,22 +5,19 @@ Project A: Generative Creatures
 CCLaboratories Biodiversity Atlas 
 */
 
-//Start
 let flapFrequency = 0;
-let bird; // Single bird object
+let bird;
+let x,y,pos;
 
 //Set up background in dark blue
 function setup() {
   let canvas = createCanvas(800, 500);
-  canvas.parent('p5-canvas-container'); // Attach the canvas to the container in index.html
+  canvas.parent("p5-canvas-container");
   background(20, 28, 49);
-
-  //Initialize the bird position
-  bird = { 
-    x: width / 2, 
-    y: height / 2,  
-  };
-  
+  //Initialize the bird position ONCE with random coordinates
+  let x = random(width/2-30, width/2+30);
+  let y = random(height/2-30, height/2+30);
+  bird = {pos: createVector(x, y)};
 }
 
 function draw() {
@@ -33,28 +30,23 @@ function draw() {
   shiningStars();
   brightMoon();
   updateAndDrawBird();
-
 }
 
 // Draw the single bird
 function updateAndDrawBird() {
-  bird.x=width/2;
-  bird.y=height/2;
-
+  // Remove the random position generation from here!
+  // The bird position is now static, set once in setup()
   push();
-  translate(bird.x, bird.y);
-
+  translate(bird.pos.x, bird.pos.y);
   // Glowing effect
   noStroke();
   fill(106, 220, 153, 60);
   ellipse(0, 0, 40, 100);
-
   // Body
   fill(106, 220, 153);
   ellipse(0, 0, 20, 70);
   fill(141, 0, 196);
   ellipse(0, -20, 5, 60);
-
   // Eyes
   fill(lerpColor(
     color(255,255,255),
@@ -64,18 +56,14 @@ function updateAndDrawBird() {
   );
   circle(-6,-12,5);
   circle(6,-12,5);
-
-
   // Flapping wings
   fill(mouseX % 255, ((mouseX + mouseY) / 2) % 255, mouseY % 255);
   flapFrequency += 0.2;
   let wingSize = 30 + sin(flapFrequency) * 10;
   ellipse(-15, 0, wingSize, 15);
   ellipse(15, 0, wingSize, 15);
-
   // Triangular tail
   drawTriangularTails(0, 35, 10);
-
   pop();
 }
 
@@ -102,7 +90,6 @@ function shiningStars() {
     )
   );
   circle(165, 582, 10);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -111,7 +98,6 @@ function shiningStars() {
     )
   );
   circle(450, 245, 7);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -120,7 +106,6 @@ function shiningStars() {
     )
   );
   circle(298, 127, 6);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -129,7 +114,6 @@ function shiningStars() {
     )
   );
   circle(286, 372, 4);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -138,7 +122,6 @@ function shiningStars() {
     )
   );
   circle(510, 533, 7);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -147,7 +130,6 @@ function shiningStars() {
     )
   );
   circle(595, 305, 8);
-
   fill(
     lerpColor(
       color(20, 28, 49),
@@ -162,24 +144,20 @@ function shiningStars() {
 function brightMoon() {
   push();
   translate(145, 225);
-
   for (let i = 0; i < 3; i++) {
     fill(244, 255, 245, 15 - i * 5);
     noStroke();
     circle(0, 0, 79 + i * 25);
   }
-
   fill(244, 255, 245);
   noStroke();
   circle(0, 0, 79);
-
   fill(200, 210, 205, 150);
   circle(-8, -12, 12);
   circle(15, 8, 8);
   circle(-18, 15, 6);
   circle(10, -20, 5);
   circle(-5, 20, 4);
-
   fill(220, 230, 225, 100);
   for (let i = 0; i < 15; i++) {
     let angle = random(TWO_PI);
@@ -188,12 +166,7 @@ function brightMoon() {
     let y = sin(angle) * radius;
     circle(x, y, random(1, 3));
   }
-
   fill(255, 255, 255, 180);
   circle(-15, -15, 20);
-
   pop();
 }
-//Finish
-
-
