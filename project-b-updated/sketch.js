@@ -5,7 +5,7 @@ let figureData = [
     saying:
       'Saying: "Tomorrow will be my 700th birthday, wish the network works well"\n Name: Axis-07',
     mass: 2.0,
-    size: 40,
+    size: 120,
   },
   // #2
   {
@@ -13,14 +13,14 @@ let figureData = [
     saying:
       "Saying: 0010101001010100101010101010101010101010101010101\n Name: 01000100010001",
     mass: 2.5,
-    size: 50,
+    size: 150,
   },
   // #3
   {
     img: null,
     saying: "Saying:_________________________________\n Name: __________",
     mass: 1.5,
-    size: 40,
+    size: 120,
   },
   // #4
   {
@@ -28,14 +28,14 @@ let figureData = [
     saying:
       "Saying: System overload... requesting assistance from external processes...\n Name: Cache_Handler",
     mass: 2.0,
-    size: 40,
+    size: 120,
   },
   // #5
   {
     img: null,
     saying: "Saying: There might be something wrong…\n Name: MagnetX",
     mass: 2.5,
-    size: 50,
+    size: 150,
   },
   // #6
   {
@@ -43,7 +43,7 @@ let figureData = [
     saying:
       "Saying: *U@(HC*$ QYEc220e8 98q0 ecu929erjfewu9fdY(&*^&T@*E\n Name: (*&@Ye8g",
     mass: 2.0,
-    size: 40,
+    size: 120,
   },
   // #7
   {
@@ -51,7 +51,7 @@ let figureData = [
     saying:
       "Saying:                                    \n Name:               ",
     mass: 1.5,
-    size: 50,
+    size: 150,
   },
 ];
 
@@ -59,25 +59,25 @@ let backgroundImageData = [
   //Flower 1
   {
     img: null,
-    size: 30,
+    size: 90,
     category: "flower",
   },
   //Flower 2
   {
     img: null,
-    size: 20,
+    size: 60,
     category: "flower",
   },
   //Cloud
   {
     img: null,
-    size: 60,
+    size: 180,
     category: "cloud",
   },
   //Tree
   {
     img: null,
-    size: 90,
+    size: 270,
     category: "tree",
   },
 ];
@@ -105,7 +105,7 @@ function preload() {
 }
 
 function setup() {
-  let canvas = createCanvas(1050, 250);
+  let canvas = createCanvas(1400, 500);
   canvas.parent("p5-canvas-container");
 
   sunColor = [
@@ -165,14 +165,15 @@ function draw() {
   }
 
   //draw the ground
+  
   noStroke();
   fill(128, 70, 27);
-  rect(0, height - 15, width, 15);
+  rect(0, height - 25, width, 25);
 
   //draw the sun
   for (let m = 0; m < 5; m++) {
     fill(sunColor[4 - m]);
-    circle(0, 0, 140 - m * 20);
+    circle(0, 0, 180 - m * 20);
   }
 }
 
@@ -223,7 +224,7 @@ function mousePressed() {
 
     if (newBackgroundData.category == "cloud") {
       newBackground.pos.x = random(width);
-      newBackground.pos.y = random(20, 80);
+      newBackground.pos.y = random(40, 100);
     } else if (newBackgroundData.category == "flower") {
       newBackground.pos.x = random(width);
       newBackground.pos.y = height - 30;
@@ -313,8 +314,8 @@ class Figure {
       this.moveDirection *= -1;
     }
 
-    if (this.pos.y > height - 30) {
-      this.pos.y = height - 30;
+    if (this.pos.y > height - 80) {
+      this.pos.y = height - 80;
       this.vel.y = 0;
       this.onGround = true;
     } else {
